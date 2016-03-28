@@ -38,4 +38,53 @@ class Checks(object):
         ro.globalenv['tabla'] = df
         ro.r('Out <- Rmax(tabla)')
         print ro.r('Out')
-        
+    def MaxMonth(self, Cursor, Month, Units, Limit=1):
+        '''get maximum of month by units'''
+        File=open('MaxMonth.csv','w')
+        File.write("unidad, fecha, hora, costo_maximo\n")
+        for item in Units:
+            Qry = """
+            select * from(
+            select unidad,
+            fecha_inicial,
+            hora,precio_per_mw_10,
+            max(precio_per_mw_10) over
+            (partition by unidad order by fecha_inicial,
+            hora asc rows between unbounded preceding and unbounded following )
+            as costo_maximo from ofertas_energia_david
+            where (tipo_reporte='TE' and unidad='{1}' 
+            and month(fecha_inicial)={0} and precio_per_mw_10 > 0)
+            ) data where data.costo_maximo=precio_per_mw_10 
+            and data.costo_maximo > 0 limit {2}
+            """.format(Month, item, Limit)
+            Cursor.execute(Qry)
+            #da formato pandas
+            df = as_pandas(Cursor)
+            print df
+            try:
+                File.write("{0}, {1}, {2}, {3}\n".format(str(df['data.unidad'][0]),
+                    str(df['data.fecha_inicial'][0]),
+                    str(df['data.hora'][0]),
+                    str(df['data.costo_maximo'][0])))
+            except IndexError:
+                print item + " vacio"
+                pass
+        File.close()
+
+    def AvgMonth(self, Cursor, Month, Units, Limit=1):
+        '''GetAverage of month by units'''
+        File=open('AvgMonth.csv', 'w')
+        File.write("Unidad, promedio\n")
+        for item in Units:
+            Qry = """
+            select avg(precio_per_mw_10) 
+            from ofertas_energia_david
+            where tipo_reporte='TE' and unidad='{1}' 
+            and month(fecha_inicial)={0} and precio_per_mw_10 > 0
+            limit {2}
+            """.format(Month, item,Limit)
+            Cursor.execute(Qry)
+            #da formato pandas
+            df = as_pandas(Cursor)
+            File.write("{0}, {1}\n".format(item,str(df['c0'][0])))
+        File.close()
