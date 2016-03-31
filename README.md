@@ -1,2 +1,11 @@
 # RHPy
-interface  Hadoop -> python -> R use  som PANDAS. example also  added
+Sencillo motor para mineria de datos HIVE+PANDAS+R.
+Requerimientos de Software
+==========================
+1.-Consigue Python2.7 and pip
+    #apt-get install python2.7 pip2
+2.-Consigue interprete R
+    #apt-get install r-base r-base-dev r-recommended r-base-core r-base-html
+3.-Otra paqueteria y librerias necesarias
+    #apt-get install build-essential autoconf libtool pkg-config python-opengl python-imaging python-pyrex python-pyside.qtopengl idle-python2.7 qt4-dev-tools qt4-designer libqtgui4 libqtcore4 libqt4-xml libqt4-test libqt4-script libqt4-network libqt4-dbus python-qt4 python-qt4-gl libgle3 python-dev libsasl2-2 python-setuptools libsasl2-dev python-rpy2 python-rpy2 python-pandas
+4.-
