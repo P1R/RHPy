@@ -1,4 +1,4 @@
-'''datos para conexion a hadoop'''
+'''datos para conexion a Hive'''
 DbData={'user': 'root',
         'password': 'somepasswd',
         'host': 'somehost',

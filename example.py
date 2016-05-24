@@ -24,7 +24,7 @@ precio_per_mw_11
 from ofertas_energia_david where tipo_reporte='TE' limit 100
 """
 #conecta con hivedoop
-conn = connect(host='nethunters.xyz', port=8081, user='root', password='ft245rl')
+conn = connect(host='somehost', port=123, user='someuser', password='mypass')
 #crea cursor
 cursor = conn.cursor()
 #ejecuta Qry

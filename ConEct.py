@@ -20,7 +20,7 @@ class ConEct(object):
         return conn, cursor
 
     def db_close(self, conn):
-        '''disconect cursor and database'''
+        '''desconecta cursor y base de datos'''
         conn.close() 
 
 if __name__ == "__main__":
